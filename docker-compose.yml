@@ -1,0 +1,60 @@
+version: '3'
+services:
+
+  #PHP Service
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: transactionapp-php
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/transactionApp
+    volumes:
+      - ./:/var/www/transactionApp
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - net
+    depends_on:
+      - mysql
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: transactionapp-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/transactionApp
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - net
+
+  #MySQL Service
+  mysql:
+    image: mysql:5.7
+    container_name: transactionapp-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_DATABASE: 'transaction_app'
+      MYSQL_USERNAME: 'laravel_user'
+      MYSQL_PASSWORD: 'laravel_pass'
+      MYSQL_ROOT_PASSWORD: 'root_pass'
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db_data:/var/lib/mysql/
+    networks:
+      - net
+
+#Volumes
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  net:
+    driver: bridge
