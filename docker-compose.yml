@@ -1,7 +1,6 @@
 version: '3'
 services:
 
-  #PHP Service
   php:
     build:
       context: .
@@ -18,7 +17,6 @@ services:
     depends_on:
       - mysql
 
-  #Nginx Service
   nginx:
     image: nginx:alpine
     container_name: transactionapp-nginx
@@ -32,7 +30,6 @@ services:
     networks:
       - net
 
-  #MySQL Service
   mysql:
     image: mysql:5.7
     container_name: transactionapp-mysql
@@ -50,7 +47,6 @@ services:
     networks:
       - net
 
-#Volumes
 volumes:
   db_data:
     driver: local
