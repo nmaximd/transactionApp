@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Account;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -11,6 +13,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\User::class, 100)->create();
+        factory(User::class, 100)->create()->each(function (User $user) {
+            $user->account()->save(factory(Account::class)->make());
+        });
     }
 }
