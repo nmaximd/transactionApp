@@ -5,6 +5,7 @@
 use App\Models\Account;
 use App\Models\User;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\FactoryBuilder;
 use Illuminate\Support\Str;
 
 /*
@@ -32,4 +33,10 @@ $factory->define(Account::class, function (Faker $faker) {
     return [
         'balance' => $faker->randomFloat(2, 0, 10000)
     ];
+});
+
+FactoryBuilder::macro('withoutEvents', function () {
+    $this->class::flushEventListeners();
+
+    return $this;
 });

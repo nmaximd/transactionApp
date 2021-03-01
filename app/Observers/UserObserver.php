@@ -14,6 +14,8 @@ class UserObserver
      */
     public function created(User $user)
     {
-        $user->account()->create(['balance' => 0]);
+        if(is_null($user->account)) {
+            $user->account()->create(['balance' => 0]);
+        }
     }
 }
