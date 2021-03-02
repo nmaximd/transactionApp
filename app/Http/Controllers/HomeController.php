@@ -2,27 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Repositories\Interfaces\LastTransactionsRepositoryInterface;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Show last users' transaction.
      *
-     * @return void
+     * @param LastTransactionsRepositoryInterface $repository
+     * @return \Illuminate\View\View
      */
-    public function __construct()
+    public function index(LastTransactionsRepositoryInterface $repository)
     {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
+        return view('home')->with('users', $repository->getPaginatedData());
     }
 }

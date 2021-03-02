@@ -2,22 +2,32 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if(!empty($users) && $users->count())
+            @foreach($users as $user)
+                <tr>
+                    <td>{{ $user->from }}</td>
+                    <td>{{ $user->to ?? 'N/A' }}</td>
+                    <td>{{ $user->amount ?? 'N/A' }}</td>
+                    <td>{{ $user->date ?? 'N/A' }}</td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="10">No transaction found.</td>
+            </tr>
+        @endif
+        </tbody>
+    </table>
+    {{ $users->links() }}
 </div>
 @endsection
