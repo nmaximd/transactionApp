@@ -66,6 +66,11 @@
                         </div>
                     </form>
                 </div>
+                @if(\App\Models\User::first())
+                    <div class="card-footer">
+                        <p>Use this credentials for testing: <i>{{\App\Models\User::first()->email}} / password</i></p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
