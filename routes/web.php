@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->middleware(['auth'])->name('home');
 
 Auth::routes(['reset' => false, 'confirm' => false]);
+
+Route::resource('transaction', 'TransactionController', [
+    'middleware' => ['auth'],
+    'only' => ['index', 'create', 'store']
+]);

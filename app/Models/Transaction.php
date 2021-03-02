@@ -28,10 +28,10 @@ class Transaction extends Model
     const STATUS_SERVER_ERROR = 3;
 
     private static $labels = [
-        self::STATUS_PLANNED => 'planned',
-        self::STATUS_PROCESSED => 'processed',
-        self::STATUS_USER_ERROR => 'user error',
-        self::STATUS_SERVER_ERROR => 'server error',
+        self::STATUS_PLANNED => 'Planned',
+        self::STATUS_PROCESSED => 'Processed',
+        self::STATUS_USER_ERROR => 'User error',
+        self::STATUS_SERVER_ERROR => 'Server error',
     ];
 
     /**

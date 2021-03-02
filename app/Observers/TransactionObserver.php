@@ -16,8 +16,11 @@ class TransactionObserver
      */
     public function creating(Transaction $transaction)
     {
-        if (is_null($transaction->status)){
+        if (is_null($transaction->status)) {
             $transaction->status = Transaction::STATUS_PLANNED;
+        }
+        if (is_null($transaction->sender)) {
+            $transaction->sender()->associate(auth()->user());
         }
     }
 
