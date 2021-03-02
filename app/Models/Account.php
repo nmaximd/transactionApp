@@ -24,6 +24,10 @@ class Account extends Model
         'balance',
     ];
 
+    protected $casts = [
+        'balance' => 'decimal:2'
+    ];
+
     /**
      * Account owner
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

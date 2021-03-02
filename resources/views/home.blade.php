@@ -2,13 +2,14 @@
 
 @section('content')
 <div class="container">
+    <h2>{{ __('Last users\' transactions') }}</h2>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>From</th>
-            <th>To</th>
-            <th>Amount</th>
-            <th>Date</th>
+            <th>{{ __('From') }}</th>
+            <th>{{ __('To') }}</th>
+            <th>{{ __('Amount') }}</th>
+            <th>{{ __('Date') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -16,18 +17,20 @@
             @foreach($users as $user)
                 <tr>
                     <td>{{ $user->from }}</td>
-                    <td>{{ $user->to ?? 'N/A' }}</td>
-                    <td>{{ $user->amount ?? 'N/A' }}</td>
-                    <td>{{ $user->date ?? 'N/A' }}</td>
+                    <td>{{ $user->to ?? __('N/A') }}</td>
+                    <td>{{ $user->amount ?? __('N/A') }}</td>
+                    <td>{{ $user->date ?? __('N/A') }}</td>
                 </tr>
             @endforeach
         @else
             <tr>
-                <td colspan="10">No transaction found.</td>
+                <td colspan="10">{{ __('No transaction found') }}</td>
             </tr>
         @endif
         </tbody>
     </table>
-    {{ $users->links() }}
+    @if(!empty($users))
+        {{ $users->links() }}
+    @endif
 </div>
 @endsection
