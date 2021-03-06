@@ -19,8 +19,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl \
-    cron
+    curl
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -30,15 +29,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
-
-COPY . /var/www/transactionApp
-
-RUN chown -R www:www .
-
-RUN chmod -R 775 storage
-RUN chmod -R 775 bootstrap/cache
-
-RUN crontab -l | { cat; echo "* * * * * php /app/artisan schedule:run >> /dev/null 2>&1"; } | crontab -
 
 USER www
 
