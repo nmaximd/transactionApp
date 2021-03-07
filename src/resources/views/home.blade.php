@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2>{{ __('Last users\' transactions') }}</h2>
+    <h2>{{ __('Recent user transactions') }}</h2>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -24,7 +24,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="10">{{ __('No transaction found') }}</td>
+                <td colspan="10">{{ __('No transactions found') }}</td>
             </tr>
         @endif
         </tbody>

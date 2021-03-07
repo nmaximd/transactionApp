@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Interfaces\LastTransactionsRepositoryInterface;
+use App\Repositories\Interfaces\RecentTransactionsRepositoryInterface;
 
 class HomeController extends Controller
 {
     /**
-     * Show last users' transaction.
+     * Show recent users' transaction.
      *
-     * @param LastTransactionsRepositoryInterface $repository
+     * @param RecentTransactionsRepositoryInterface $repository
      * @return \Illuminate\View\View
      */
-    public function index(LastTransactionsRepositoryInterface $repository)
+    public function index(RecentTransactionsRepositoryInterface $repository)
     {
         return view('home')->with('users', $repository->getPaginatedData());
     }

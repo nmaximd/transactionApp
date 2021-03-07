@@ -5,7 +5,7 @@ namespace App\Repositories\Interfaces;
 
 use Illuminate\Contracts\Pagination\Paginator;
 
-interface LastTransactionsRepositoryInterface
+interface RecentTransactionsRepositoryInterface
 {
     /**
      * Should return all users with their one

@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\Interfaces\LastTransactionsRepositoryInterface;
+use App\Repositories\Interfaces\RecentTransactionsRepositoryInterface;
 use App\Repositories\Interfaces\TransactionRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\LastTransactionsRepository;
+use App\Repositories\RecentTransactionsRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -20,8 +20,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            LastTransactionsRepositoryInterface::class,
-            LastTransactionsRepository::class
+            RecentTransactionsRepositoryInterface::class,
+            RecentTransactionsRepository::class
         );
         $this->app->bind(
             TransactionRepositoryInterface::class,
