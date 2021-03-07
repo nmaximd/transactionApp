@@ -17,7 +17,10 @@ class TransactionController extends Controller
     public function index(TransactionRepositoryInterface $transactionRepository)
     {
         return view('transaction.index')
-            ->with('transactions', $transactionRepository->getUserTransactionsPaginated());
+            ->with([
+                'sentTransactions' => $transactionRepository->getUserSentTransactionsPaginated(),
+                'receivedTransactions' => $transactionRepository->getUserReceivedTransactionsPaginated()
+            ]);
     }
 
     /**

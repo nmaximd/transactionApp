@@ -6,8 +6,8 @@
 
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>{{ __('My transactions') }}</h2>
-            @if(auth()->user()->balance > 0)
+            <h2>{{ __('Sent transactions') }}</h2>
+            @if(auth()->user()->account->balance > 0)
                 <a href="{{ route('transaction.create') }}" type="button" class="btn btn-outline-primary">
                     {{ __('Add new') }}
                 </a>
@@ -35,8 +35,8 @@
             </thead>
 
             <tbody>
-            @if(!empty($transactions) && $transactions->count())
-                @foreach($transactions as $transaction)
+            @if(!empty($sentTransactions) && $sentTransactions->count())
+                @foreach($sentTransactions as $transaction)
                     <tr>
                         <td>{{ $transaction->name }}</td>
                         <td>{{ $transaction->amount }}</td>
@@ -49,15 +49,53 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="10">{{ __('No transaction found') }}</td>
+                    <td colspan="10">{{ __('No transactions found') }}</td>
                 </tr>
             @endif
             </tbody>
 
         </table>
 
-        @if(!empty($transactions))
-            {{ $transactions->links() }}
+        @if(!empty($sentTransactions))
+            {{ $sentTransactions->links() }}
+        @endif
+
+        <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+            <h2>{{ __('Received transactions') }}</h2>
+        </div>
+
+        <table class="table table-bordered table-striped">
+
+            <thead>
+            <tr>
+                <th>{{ __('Sender') }}</th>
+                <th>{{ __('Amount') }}</th>
+                <th>{{ __('Date') }}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @if(!empty($receivedTransactions) && $receivedTransactions->count())
+                @foreach($receivedTransactions as $transaction)
+                    <tr>
+                        <td>{{ $transaction->name }}</td>
+                        <td>{{ $transaction->amount }}</td>
+                        <td>
+                            {{ Carbon\Carbon::parse($transaction->sent_date)->format('Y-m-d H:i') }}
+                        </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="10">{{ __('No transactions found') }}</td>
+                </tr>
+            @endif
+            </tbody>
+
+        </table>
+
+        @if(!empty($receivedTransactions))
+            {{ $receivedTransactions->links() }}
         @endif
 
     </div>

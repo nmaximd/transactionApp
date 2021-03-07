@@ -1,8 +1,6 @@
 FROM php:7.4-fpm
 
-RUN mkdir /var/www/transactionApp
-
-WORKDIR /var/www/transactionApp
+WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -19,18 +17,16 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl
+    curl \
+    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl \
+    && pecl install -o -f redis \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis \
+    && groupadd -g 1000 www \
+    && useradd -u 1000 -ms /bin/bash -g www www
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
-
 USER www
 
-EXPOSE 9000
-CMD ["php-fpm"]
+CMD php artisan queue:work

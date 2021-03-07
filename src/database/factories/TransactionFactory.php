@@ -43,7 +43,7 @@ $factory->define(Transaction::class, function (Faker $faker) {
         'sender_id' => $sender_id,
         'recipient_id' => $recipient_id,
         'amount' => $faker->randomFloat(2, 0.01, User::find($sender_id)->account->balance),
-        'sending_date' => $faker->dateTimeBetween('now', '+7 days')->format('Y-m-d h:00'),
+        'sending_date' => $faker->dateTimeBetween('yesterday', '+2 days')->format('Y-m-d h:00'),
         'sent_date' => null,
     ];
 });

@@ -17,5 +17,6 @@ class TransactionSeeder extends Seeder
         for($i = 0; $i<100; $i++){
             factory(Transaction::class)->create();
         }
+        \App\Jobs\ProcessTransactionsJob::dispatch();
     }
 }

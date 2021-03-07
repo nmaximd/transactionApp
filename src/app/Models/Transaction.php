@@ -24,14 +24,10 @@ class Transaction extends Model
      */
     const STATUS_PLANNED = 0;
     const STATUS_PROCESSED = 1;
-    const STATUS_USER_ERROR = 2;
-    const STATUS_SERVER_ERROR = 3;
 
     private static $labels = [
         self::STATUS_PLANNED => 'Planned',
         self::STATUS_PROCESSED => 'Processed',
-        self::STATUS_USER_ERROR => 'User error',
-        self::STATUS_SERVER_ERROR => 'Server error',
     ];
 
     /**

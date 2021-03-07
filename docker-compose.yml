@@ -1,30 +1,52 @@
 version: '3'
 services:
 
-  php:
+  app:
     build:
-      context: docker/php
-    container_name: transactionapp-php
+      context: docker/app
+    container_name: transactionapp-app
     restart: unless-stopped
-    tty: true
-    working_dir: /var/www/transactionApp
     volumes:
-      - ./src:/var/www/transactionApp
-      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./src:/var/www/html
+      - ./docker/app/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - net
     depends_on:
       - mysql
+      - redis
+
+  worker:
+    build:
+      context: docker/worker
+    container_name: transactionapp-worker
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - net
+    depends_on:
+      - app
+
+  scheduler:
+    build:
+      context: docker/scheduler
+    container_name: transactionapp-scheduler
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - net
+    depends_on:
+      - worker
 
   nginx:
     image: nginx:alpine
     container_name: transactionapp-nginx
     restart: unless-stopped
-    tty: true
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/transactionApp
+      - ./src:/var/www/html
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - net
@@ -32,9 +54,7 @@ services:
   mysql:
     image: mysql:5.7
     container_name: transactionapp-mysql
-    command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
-    tty: true
     environment:
       MYSQL_DATABASE: 'transaction_app'
       MYSQL_USERNAME: 'laravel_user'
@@ -46,8 +66,19 @@ services:
     networks:
       - net
 
+  redis:
+    image: redis:alpine
+    container_name: transactionapp-redis
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+    networks:
+      - net
+
 volumes:
   mysql:
+    driver: local
+  redis:
     driver: local
 
 networks:

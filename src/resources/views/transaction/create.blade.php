@@ -77,7 +77,9 @@
                                 class="form-control @if($errors->has('date') || $errors->has('time')) is-invalid @endif"
                                 id="time" name="time" required="required">
                                 @for($i = 0; $i < 24; $i++)
-                                    <option value="{{ $i }}">{{ ($i<10) ? '0'.$i : $i }}:00</option>
+                                    <option value="{{ $i }}" @if(old('time') == $i) selected @endif>
+                                        {{ ($i<10) ? '0'.$i : $i }}:00
+                                    </option>
                                 @endfor
                             </select>
 
